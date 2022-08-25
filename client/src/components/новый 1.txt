@@ -1,0 +1,29 @@
+						  
+window.addEventListener('beforeunload',function(){
+			localStorage.setItem('indexsong',JSON.stringify(indexsong));
+		});
+		
+const blob = new Blob(loadsrc[0].data.data,{type:loadsrc[0].format});
+    console.log(blob);
+    const url = URL.createObjectURL(blob);
+    URL.revokeObjectURL(blob);
+	console.log(url);
+	
+const switchSong = (e) => {
+		switch (e.currentTarget.dataset.click){
+			case 'prev':
+			   dispatch({type:'decrement'});
+			   if (indexsong == -1){
+				   localStorage.setItem('indexsong',JSON.stringify({index:playlist.length - 1}));
+				   dispatch({type:'update'});
+				   console.log('clicked');
+               }				   
+			case 'next':
+			   dispatch({type:'increment'});
+			   if (indexsong == playlist.length){
+				   localStorage.setItem('indexsong',JSON.stringify({index:0}));
+				   dispatch({type:'update'});
+				   console.log('clicked');
+			   }
+		}
+	}
